@@ -94,24 +94,24 @@ int main(void)
   int count = 0;
   while (1)
   {
-      if(count == 0){
-          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
-          HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-      }
-      else if (count == 2){
-          HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
-          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-      }
-
-      // Increment the count and reset it after 2 seconds
-      count++;
-      if(count > 2) {
-          count = 0;
-      }
-
-      HAL_Delay(1000);
 
     /* USER CODE BEGIN 3 */
+	if(count == 0){
+				HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
+				HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
+	}
+	else if (count == 2){
+		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
+		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
+	}
+
+	// Increment the count and reset it after 2 seconds
+	count++;
+	if(count > 2) {
+		count = 0;
+	}
+
+	HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
