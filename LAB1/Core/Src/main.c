@@ -94,32 +94,43 @@ int main(void)
   int count = 10;
   while (1)
   {
-      /* USER CODE END WHILE */
-      /* USER CODE BEGIN 3 */
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
 
       if (count>5) {
-          // RED light ON, YELLOW and GREEN OFF
+          //TRAFFIC 1
           HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
           HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);  // Negative logic, setting the pin to SET turns off the LED
           HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
 
-           // RED light stays on for 5 seconds
+          //TRAFFIC 2
+          HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
+          HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, RESET);  // Negative logic, setting the pin to SET turns off the LED
+          HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
+          if(count <8){
+              HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, RESET);
+              HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);  // Negative logic, setting the pin to SET turns off the LED
+              HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
+          }
       }
-      else if (count>3) {
-          // YELLOW light ON, RED and GREEN OFF
+      else if (count>2) {
+          //TRAFFIC 1
           HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-          HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);  // Negative logic, setting the pin to SET turns off the LED
-          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
+          HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);  // Negative logic, setting the pin to SET turns off the LED
+          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
 
-           // YELLOW light stays on for 2 seconds
+          //TRAFFIC 2
+          HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
+          HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);  // Negative logic, setting the pin to SET turns off the LED
+          HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
       }
       else if (count>0) {
-          // GREEN light ON, RED and YELLOW OFF
+          //TRAFFIC 1
           HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-          HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);  // Negative logic, setting the pin to RESET turns on the LED
+          HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
+          HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);  // Negative logic, setting the pin to RESET turns on the LED
 
-          // GREEN light stays on for 3 seconds
       }
 
       // Increment the count and reset it after the GREEN light
@@ -179,9 +190,13 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, LED_GREEN2_Pin|LED_YELLOW2_Pin|LED_RED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin LED_GREEN_Pin */
   GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin;
@@ -189,6 +204,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED_GREEN2_Pin LED_YELLOW2_Pin LED_RED2_Pin */
+  GPIO_InitStruct.Pin = LED_GREEN2_Pin|LED_YELLOW2_Pin|LED_RED2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
